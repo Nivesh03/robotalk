@@ -8,9 +8,9 @@ const Page = () => {
     <main>
       <h1>Popular Companions</h1>
       <section className='home-section'>
-        <CompanionCard id="123" name="Neura" topic="quantum science" subject="science" duration={45} color="#792caf" />
-        <CompanionCard id="111" name="Plura" topic="calculus" subject="mathematics" duration={60} color="#16a26a" />
-        <CompanionCard id="011" name="Verbanacular" topic="language" subject="literature" duration={35} color="#5254cf" />
+        <CompanionCard id="123" name="Neura the Brainy Explorer" topic="Neural Network of the Brain" subject="science" duration={45} color="#E5D0FF" />
+        <CompanionCard id="111" name="Countsy the Number Wizard" topic="Derivatives & Integrals" subject="maths" duration={60} color="#FFDA6E" />
+        <CompanionCard id="011" name="Verba the Vocabulary Builder" topic="English Literature" subject="literature" duration={35} color="#BDE7FF" />
       </section>
       <section className='home-section'>
         <CompanionsList
