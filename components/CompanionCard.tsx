@@ -1,8 +1,7 @@
 "use client";
-
 import {
-  bookmarkCompanion,
-  unbookmarkCompanion,
+  addBookmark,
+  removeBookmark,
 } from "@/lib/actions/companion.actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,9 +29,9 @@ const CompanionCard = ({
   const path = usePathname();
   const handleBookmark = async () => {
     if (bookmark) {
-      await unbookmarkCompanion(id, path);
+      await removeBookmark(id, path);
     } else {
-      await bookmarkCompanion(id, path);
+      await addBookmark(id, path);
     }
   };
 
@@ -41,22 +40,15 @@ const CompanionCard = ({
       <div className="flex justify-between items-center">
         <div className="subject-badge">{subject}</div>
         <button className="companion-bookmark" onClick={handleBookmark}>
-          {bookmark ? (
+          {
             <Image
-              src="/icons/bookmark-filled.svg"
+              src={bookmark ? "/icons/bookmark-filled.svg" : "/icons/bookmark.svg"}
               style={{ fill: "white" }}
               alt="bookmark"
               width={12.5}
               height={15}
             />
-          ) : (
-            <Image
-              src="/icons/bookmark.svg"
-              alt="bookmark"
-              width={12.5}
-              height={15}
-            />
-          )}
+          }
         </button>
       </div>
       <h2 className="text-2xl font-bold">{name}</h2>

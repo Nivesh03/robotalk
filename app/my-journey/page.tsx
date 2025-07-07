@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  getUserBookmarks,
+  getBookmarkedCompanions,
   getUserCompanions,
   getUserSession,
 } from "@/lib/actions/companion.actions";
@@ -19,7 +19,7 @@ const Profile = async () => {
   if (!user) redirect("/sign-in");
   const companions = await getUserCompanions(user.id);
   const sessionHistory = await getUserSession(user.id);
-  const bookmarks = await getUserBookmarks(user.id);
+  const bookmarks = await getBookmarkedCompanions(user.id);
 
   return (
     <main className="min-lg:w-3/4">

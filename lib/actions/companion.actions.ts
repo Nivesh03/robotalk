@@ -40,7 +40,6 @@ export const getAllCompanions = async ({
 
   query = query
     .range((page - 1) * limit, page * limit - 1)
-    .order("bookmark", { ascending: false });
   const { data: companions, error } = await query;
 
   if (error) throw new Error(error.message);
@@ -138,48 +137,49 @@ export const newCompanionPermissions = async () => {
   }
 };
 
-export const bookmarkCompanion = async (companionId: string, path: string) => {
+export const addBookmark = async (companionId: string, path: string) => {
   const { userId } = await auth();
+  if (!userId) return;
   const supabase = createSupabaseClient();
-  const { data, error } = await supabase
-    .from("companions")
-    .update({
-      bookmark: true,
-    })
-    .eq("id", companionId)
-    .eq("author", userId);
+  const { data, error } = await supabase.from("bookmarks").insert({
+    companion_id: companionId,
+    user_id: userId,
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+  // Revalidate the path to force a re-render of the page
 
-  if (error) throw new Error(error.message);
   revalidatePath(path);
   return data;
 };
 
-export const unbookmarkCompanion = async (
-  companionId: string,
-  path: string
-) => {
+export const removeBookmark = async (companionId: string, path: string) => {
   const { userId } = await auth();
+  if (!userId) return;
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
-    .from("companions")
-    .update({
-      bookmark: false,
-    })
-    .eq("id", companionId)
-    .eq("author", userId);
-
-  if (error) throw new Error(error.message);
+    .from("bookmarks")
+    .delete()
+    .eq("companion_id", companionId)
+    .eq("user_id", userId);
+  if (error) {
+    throw new Error(error.message);
+  }
   revalidatePath(path);
   return data;
 };
-export const getUserBookmarks = async (userId: string) => {
+
+// It's almost the same as getUserCompanions, but it's for the bookmarked companions
+export const getBookmarkedCompanions = async (userId: string) => {
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
-    .from("companions")
-    .select()
-    .eq("bookmark", true)
-    .eq("author", userId);
-
-  if (error) throw new Error(error.message);
-  return data;
+    .from("bookmarks")
+    .select(`companions:companion_id (*)`) // Notice the (*) to get all the companion data
+    .eq("user_id", userId);
+  if (error) {
+    throw new Error(error.message);
+  }
+  // We don't need the bookmarks data, so we return only the companions
+  return data.map(({ companions }) => companions);
 };

@@ -3,13 +3,25 @@ import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
 import {
   getAllCompanions,
+  getBookmarkedCompanions,
   getRecentSessions,
 } from "@/lib/actions/companion.actions";
 import { getSubjectColor } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
+
 const Page = async () => {
+  const { userId } = await auth();
+  if (!userId) {
+    redirect("/sign-in");
+  }
+
   const companions = await getAllCompanions({ limit: 3 });
   const recentSessionCompanions = await getRecentSessions(10);
+  const bookmarkedCompanions = await getBookmarkedCompanions(userId);
+
+  const bookmarkedIds = new Set(bookmarkedCompanions.map((c: Companion) => c.id));
 
   return (
     <main>
@@ -19,6 +31,7 @@ const Page = async () => {
           <CompanionCard
             key={companion.id}
             {...companion}
+            bookmark={bookmarkedIds.has(companion.id)}
             color={getSubjectColor(companion.subject)}
           />
         ))}
