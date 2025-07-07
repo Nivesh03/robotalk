@@ -1,5 +1,5 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
 const CTA = () => {
   return (
@@ -11,13 +11,13 @@ const CTA = () => {
       <p>Create your own personalized companion and start learning today.</p>
       <Image src="images/cta.svg" alt="cta" width={362} height={232} />
       <button className="btn-primary">
-        <Image src="icons/plus.svg" alt="plus" width={12} height={12}/>
+        <Image src="icons/plus.svg" alt="plus" width={12} height={12} />
         <Link href="/companions/new">
           <p>Build a new Companion</p>
         </Link>
       </button>
     </section>
-  )
-}
+  );
+};
 
-export default CTA
+export default CTA;

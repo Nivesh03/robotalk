@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { subjectsColors,  voices } from "@/constants";
+import { subjectsColors, voices } from "@/constants";
 import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -54,9 +54,9 @@ export const configureAssistant = (voice: string, style: string) => {
         },
       ],
     },
-    // @ts-expect-error
+    // @ts-expect-error - vapi types are not correct
     clientMessages: [],
-    // @ts-expect-error
+    // @ts-expect-error - vapi types are not correct
     serverMessages: [],
   };
   return vapiAssistant;

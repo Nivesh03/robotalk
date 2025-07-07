@@ -2,9 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Navitems from "./Navitems"
 import {
-  ClerkProvider,
   SignInButton,
-  SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,
