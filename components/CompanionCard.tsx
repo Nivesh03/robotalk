@@ -1,8 +1,5 @@
 "use client";
-import {
-  addBookmark,
-  removeBookmark,
-} from "@/lib/actions/companion.actions";
+import { addBookmark, removeBookmark } from "@/lib/actions/companion.actions";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -42,7 +39,9 @@ const CompanionCard = ({
         <button className="companion-bookmark" onClick={handleBookmark}>
           {
             <Image
-              src={bookmark ? "/icons/bookmark-filled.svg" : "/icons/bookmark.svg"}
+              src={
+                bookmark ? "/icons/bookmark-filled.svg" : "/icons/bookmark.svg"
+              }
               style={{ fill: "white" }}
               alt="bookmark"
               width={12.5}
